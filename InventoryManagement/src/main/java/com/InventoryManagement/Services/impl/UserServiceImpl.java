@@ -5,6 +5,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.InventoryManagement.Exceptions.*;
@@ -15,13 +16,20 @@ import com.InventoryManagement.repository.UserRepo;
 @Service
 public class UserServiceImpl implements UserService {
     
+	 private final PasswordEncoder passwordEncoder;
+
+	    @Autowired
+	    public UserServiceImpl(PasswordEncoder passwordEncoder) {
+	        this.passwordEncoder = passwordEncoder;
+	    }
 	@Autowired
 	private UserRepo userRepo;
 	
-	@Override
 	public Userdatatransfer CreateUser(Userdatatransfer userdto) {
 
         User user=this.dtoToUser(userdto);
+        String encodedPassword = passwordEncoder.encode(user.getPassword());
+        user.setPassword(encodedPassword);
         User savedUser=this.userRepo.save(user);
         
 		return this.usertoDto(savedUser);
@@ -37,7 +45,7 @@ public class UserServiceImpl implements UserService {
 		user.setEmail(userdto.getEmail());
 		user.setPassword(userdto.getPassword());
 		user.setAddress(userdto.getAddress());
-		user.setAbout(userdto.getAbout());
+		user.setAccountType(userdto.getAccountType());
 		
 		User updateduser=this.userRepo.save(user);
 		return this.usertoDto(updateduser);
@@ -73,7 +81,8 @@ public class UserServiceImpl implements UserService {
 		user.setEmail(userDTO.getEmail());
 		user.setPassword(userDTO.getPassword());
 		user.setPhone(userDTO.getPhone());
-		user.setAbout(userDTO.getAbout());
+		user.setAccountType(userDTO.getAccountType());
+		user.setAddress(userDTO.getAddress());
 		return user;
 		
 	}
@@ -86,7 +95,8 @@ public class UserServiceImpl implements UserService {
 		userDto.setEmail(user.getEmail());
 		userDto.setPassword(user.getPassword());
 		userDto.setPhone(user.getPhone());
-		userDto.setAbout(user.getAbout());
+		userDto.setAccountType(user.getAccountType());
+		userDto.setAddress(user.getAddress());
 		return userDto;
 		
 	}

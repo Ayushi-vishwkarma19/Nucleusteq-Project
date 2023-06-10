@@ -44,6 +44,7 @@ public class UserController {
 		Userdatatransfer createdUserDto=this.userService.CreateUser(userDto);
 		return new ResponseEntity<>(createdUserDto,HttpStatus.CREATED);
 	}
+	
 	@PutMapping("/{userId}")
 	public ResponseEntity<Userdatatransfer>updateUser(@RequestBody Userdatatransfer userDto,@PathVariable("userId") Integer Id){
 	  Userdatatransfer updatedUser=this.userService.updateUser(userDto, Id);
@@ -70,20 +71,25 @@ public class UserController {
 	    public String showLoginForm() {
 	        return "login";
 	    }
-	 @PostMapping("/login")
-	    public String processLogin(@RequestParam("username") String username,
+	 @PostMapping("/login{email}{password}")
+	    public String processLogin(@RequestParam("email") String username,
 	                               @RequestParam("password") String password,
+	                              
 	                               Model model) {
 	        User user = userRepo.findByEmail(username);
-
+            
 	        if (user != null && user.getPassword().equals(password)) {
 	            // Authentication successful
-	            return "redirect:/";
+	            return "Admin login";
 	        } else {
 	            // Authentication failed
 	            model.addText("error: Invalid username or password");
-	            return "login";
+	            return "Invalid info";
 	        }
+	        
+             
 	    }
+	    
 	
+
 }
