@@ -6,7 +6,8 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import com.InventoryManagement.Payloads.*;
 import com.InventoryManagement.Services.UserService;
+import com.InventoryManagement.Services.impl.UserDetailServiceImpl;
 import com.InventoryManagement.entities.User;
 import com.InventoryManagement.repository.UserRepo;
 
@@ -26,13 +28,18 @@ import ch.qos.logback.core.model.Model;
 
 @RestController
 @RequestMapping("/api/users")
-@CrossOrigin("/api/users/Register")
 
+@CrossOrigin(origins = "http://localhost:3000")
 public class UserController {
    
 	@Autowired
+	private  PasswordEncoder passwordEncoder;
+	@Autowired
 	private UserService userService;
+	@Autowired
 	private  UserRepo userRepo;
+	@Autowired
+	 private UserDetailServiceImpl userDetailServiceImpl;
 	
 	public UserController(UserRepo userRepo)
 	{
@@ -40,7 +47,7 @@ public class UserController {
 	}
 	
 	@PostMapping("/Register")
-	public ResponseEntity<Userdatatransfer> createUser(@RequestBody Userdatatransfer userDto){
+	public ResponseEntity<Userdatatransfer> createUser(@Validated @RequestBody Userdatatransfer userDto){
 		Userdatatransfer createdUserDto=this.userService.CreateUser(userDto);
 		return new ResponseEntity<>(createdUserDto,HttpStatus.CREATED);
 	}
@@ -67,29 +74,26 @@ public class UserController {
 		return ResponseEntity.ok(this.userService.getUserById(Id));
 	}
 	
-	 @GetMapping("/login")
-	    public String showLoginForm() {
-	        return "login";
-	    }
-	 @PostMapping("/login{email}{password}")
-	    public String processLogin(@RequestParam("email") String username,
-	                               @RequestParam("password") String password,
-	                              
-	                               Model model) {
-	        User user = userRepo.findByEmail(username);
-            
-	        if (user != null && user.getPassword().equals(password)) {
-	            // Authentication successful
-	            return "Admin login";
-	        } else {
-	            // Authentication failed
-	            model.addText("error: Invalid username or password");
-	            return "Invalid info";
-	        }
-	        
-             
-	    }
-	    
 	
+	 @PostMapping("/login")
+	 public ResponseEntity<String> log(@RequestParam("email") String email,
+	                                   @RequestParam("password") String password,
+	                                   @RequestParam("accountType") String accountType) {
+	     User user = userRepo.findByEmail(email);
+	     
+	     if (user != null) {
+	         boolean verify = passwordEncoder.matches(password, user.getPassword());
+	         
+	         if (verify && user.getAccountType().equals(accountType)) {
+	             if (user.getAccountType().equals("Admin")) {
+	                 return ResponseEntity.ok("Welcome Admin " + user.getName());
+	             } else if (user.getAccountType().equals("Employee")) {
+	                 return ResponseEntity.ok("Welcome Employee " + user.getName());
+	             }
+	         }
+	     }
+	     
+	     return ResponseEntity.badRequest().body("Invalid Credentials!");
+	 }
 
 }

@@ -11,6 +11,9 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -26,11 +29,27 @@ public class User {
 
 	
 	private int id;
+	@NotEmpty(message = "Name is required")
 	private String name;
+	
+	@NotEmpty(message = "Email is required")
+	@Pattern(regexp = "^[A-Za-z0-9._%+-]+@nucleusteq.com+$")
 	private String email;
+	
+	 @NotEmpty(message = "Password is required")
+	
+	 @Size(min = 8, message = "Password should be at least 8 characters")
 	private String password;
-	private String Address;
+	 
+	 @NotEmpty(message = "Address is required")
+     private String Address;
+	 
+	 
+     @NotEmpty(message = "Phone is required")
+     @Pattern(regexp="^[6-9]\\d{9}$")
 	private String phone;
+     
+     @NotEmpty(message = "Account type is required")
 	private String accountType;
 	
 		@Id
