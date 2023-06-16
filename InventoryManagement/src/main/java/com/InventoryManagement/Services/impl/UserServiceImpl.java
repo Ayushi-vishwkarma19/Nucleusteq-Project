@@ -25,6 +25,8 @@ public class UserServiceImpl implements UserService {
 	@Autowired
 	private UserRepo userRepo;
 	
+	//Method to save user information in database
+	
 	public Userdatatransfer CreateUser(Userdatatransfer userdto) {
 
         User user=this.dtoToUser(userdto);

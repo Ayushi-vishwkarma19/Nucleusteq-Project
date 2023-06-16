@@ -7,7 +7,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-//Used to transfer data from entity to services
+// It is Used to transfer data from entity to services
 public class Userdatatransfer {
 	
 

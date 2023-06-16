@@ -18,13 +18,14 @@ public class UserDetailServiceImpl implements UserDetailsService {
 	
 	   this.userRepo = userRepo;
      }
-
+    
+     //Load user by Username
     @Override
      public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
     	  User user = userRepo.findByEmail(username);
 
           if (user == null) {
-              throw new UsernameNotFoundException("User not found");
+              throw new UsernameNotFoundException("User Not Found");
           }
           
 

@@ -46,6 +46,7 @@ public class UserController {
 		this.userRepo=userRepo;
 	}
 	
+	//Register Method
 	@PostMapping("/Register")
 	public ResponseEntity<Userdatatransfer> createUser(@Validated @RequestBody Userdatatransfer userDto){
 		Userdatatransfer createdUserDto=this.userService.CreateUser(userDto);
@@ -74,7 +75,7 @@ public class UserController {
 		return ResponseEntity.ok(this.userService.getUserById(Id));
 	}
 	
-	
+	//Login Method
 	 @PostMapping("/login")
 	 public ResponseEntity<String> log(@RequestParam("email") String email,
 	                                   @RequestParam("password") String password,

@@ -21,6 +21,7 @@ public class UserDetailsServiceConfigurer {
     }
 
     public void configure(AuthenticationManagerBuilder auth) throws Exception {
+    	//Authenticate the user whenever userDetailService will be called
         auth.userDetailsService(userDetailServiceImpl).passwordEncoder(passwordEncoder());
     }
     @Bean

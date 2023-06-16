@@ -6,6 +6,7 @@ import com.InventoryManagement.Payloads.Userdatatransfer;
 import com.InventoryManagement.entities.User;
 
 public interface UserService {
+	//Methods to Perform CRUD on Users
 	Userdatatransfer CreateUser(Userdatatransfer userdto);
    Userdatatransfer updateUser(Userdatatransfer userdto,Integer userId);
    Userdatatransfer getUserById(Integer userId);

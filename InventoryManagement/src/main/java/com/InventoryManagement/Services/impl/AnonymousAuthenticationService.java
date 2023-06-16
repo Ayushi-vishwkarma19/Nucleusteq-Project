@@ -29,6 +29,6 @@ public class AnonymousAuthenticationService {
         SecurityContextHolder.getContext().setAuthentication(anonymousAuthentication);
     }
 
-    // Other methods related to authentication
+    
 }
 

@@ -1,6 +1,8 @@
 package com.InventoryManagement.Exceptions;
 
+//Class to throw Exception
 public class ResourceNotFoundException extends RuntimeException {
+	
  String resourceName;
  String field;
  long fieldValue;

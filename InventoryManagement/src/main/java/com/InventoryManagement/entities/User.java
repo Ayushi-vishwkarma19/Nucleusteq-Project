@@ -29,6 +29,7 @@ public class User {
 
 	
 	private int id;
+	//Backend Validation
 	@NotEmpty(message = "Name is required")
 	private String name;
 	
