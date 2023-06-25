@@ -1,6 +1,5 @@
+//It is used to configure authentication mechanism.
 package com.InventoryManagement.config;
-
-
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;

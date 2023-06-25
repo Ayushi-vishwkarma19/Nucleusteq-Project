@@ -1,3 +1,4 @@
+//SecurityConfig class is responsible for configuring the security settings and mechanisms for this application.
 package com.InventoryManagement.config;
 
 import org.springframework.beans.factory.annotation.Autowired;

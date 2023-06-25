@@ -1,3 +1,4 @@
+//Main Class
 package com.InventoryManagement;
 
 import org.springframework.boot.SpringApplication;

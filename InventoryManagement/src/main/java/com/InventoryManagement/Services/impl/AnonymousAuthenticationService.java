@@ -1,3 +1,4 @@
+//anonymous authentication allows users to access certain resources without requiring them to authenticate or provide credentials.
 package com.InventoryManagement.Services.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;

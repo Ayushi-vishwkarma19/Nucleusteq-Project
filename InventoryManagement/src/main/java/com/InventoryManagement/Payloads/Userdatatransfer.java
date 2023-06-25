@@ -1,3 +1,4 @@
+//It is used to send data between the client and server
 package com.InventoryManagement.Payloads;
 
 import lombok.Getter;
@@ -18,7 +19,7 @@ public class Userdatatransfer {
 	private String Address;
 	private String phone;
 	private String accountType;
-	
+	private String Message;
 	
 	public int getId() {
 		return id;
@@ -63,7 +64,12 @@ public class Userdatatransfer {
 		this.accountType = accountType;
 	}
 	
-	
-	
+	public void setMessage(String Message) {
+		this.Message=Message;
+	}
+	public String getMessage()
+	{
+		return Message;
+	}
 	
 }

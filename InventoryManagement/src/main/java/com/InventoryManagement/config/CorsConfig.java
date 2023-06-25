@@ -1,3 +1,4 @@
+//This Configuration is used to controll that which domains are allowed to access our APIs.
 package com.InventoryManagement.config;
 
 import org.springframework.context.annotation.Bean;
@@ -16,7 +17,7 @@ public class CorsConfig {
 	                registry.addMapping("/api/users/**")
 	                //frontend url="http://localhost:3000"
 	                        .allowedOrigins("http://localhost:3000") 
-	                        .allowedMethods("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS")
+	                        .allowedMethods("GET", "POST", "PUT","OPTIONS")
 	                        .allowedHeaders("*")
 	                        .allowCredentials(true);
 	            }

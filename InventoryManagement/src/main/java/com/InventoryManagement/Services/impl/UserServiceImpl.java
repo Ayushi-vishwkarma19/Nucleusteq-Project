@@ -1,3 +1,4 @@
+//Implementation class for userService.
 package com.InventoryManagement.Services.impl;
 
 import java.util.List;
@@ -5,6 +6,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -30,6 +32,12 @@ public class UserServiceImpl implements UserService {
 	public Userdatatransfer CreateUser(Userdatatransfer userdto) {
 
         User user=this.dtoToUser(userdto);
+        String email=user.getEmail();
+        //To check if email already exists or not.
+        if(userRepo.findByEmail(email)!=null)
+        {
+        	throw new IllegalArgumentException("Email already exists!");
+        }
         String encodedPassword = passwordEncoder.encode(user.getPassword());
         user.setPassword(encodedPassword);
         User savedUser=this.userRepo.save(user);
@@ -101,6 +109,20 @@ public class UserServiceImpl implements UserService {
 		userDto.setAddress(user.getAddress());
 		return userDto;
 		
+	}
+
+
+
+
+	@Override
+	public Userdatatransfer getUserByEmail(String email) {
+	  User user=this.userRepo.findByEmail(email);
+	  if(user==null)
+	  {
+		  throw new UsernameNotFoundException("User Not Found");
+	  }
+	  Userdatatransfer A=this.usertoDto(user);
+	  return A;
 	}
 
 	

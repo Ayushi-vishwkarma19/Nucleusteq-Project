@@ -1,8 +1,5 @@
+// entity class represents a persistent data object that maps to a database table.
 package com.InventoryManagement.entities;
-
-
-
-
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -10,6 +7,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToMany;
+import jakarta.persistence.NamedQuery;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Pattern;
@@ -20,6 +18,7 @@ import lombok.Setter;
 
 @Entity
 @Table(name="employee_table")
+
 @NoArgsConstructor
 @Getter
 @Setter
@@ -34,7 +33,8 @@ public class User {
 	private String name;
 	
 	@NotEmpty(message = "Email is required")
-	@Pattern(regexp = "^[A-Za-z0-9._%+-]+@nucleusteq.com+$")
+	@Pattern(regexp = "^[A-Za-z0-9._%+-]+@gmail.com+$")
+	@Column(unique=true)
 	private String email;
 	
 	 @NotEmpty(message = "Password is required")
@@ -67,6 +67,7 @@ public class User {
 	public void setName(String name) {
 		this.name = name;
 	}
+	
 	public String getEmail() {
 		return email;
 	}

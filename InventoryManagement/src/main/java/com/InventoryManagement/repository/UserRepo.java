@@ -1,3 +1,4 @@
+//UserRepo is used to interact with the underlying database or data source for operations related to the User entity.
 package com.InventoryManagement.repository;
 
 import java.util.Optional;
